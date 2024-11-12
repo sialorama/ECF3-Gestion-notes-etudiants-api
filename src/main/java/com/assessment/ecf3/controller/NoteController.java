@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/notes")
 public class NoteController {
+
     @Autowired
     private NoteService noteService;
 
@@ -18,8 +19,14 @@ public class NoteController {
         return noteService.ajouterNote(note);
     }
 
-    @GetMapping
+    @DeleteMapping("/{id}")
+    public void supprimerNote(@PathVariable int id) {
+        noteService.supprimerNote(id);
+    }
+
+/*    @GetMapping
     public List<Note> getAllNotes() {
         return noteService.getAllNotes();
-    }
+    }*/
 }
+

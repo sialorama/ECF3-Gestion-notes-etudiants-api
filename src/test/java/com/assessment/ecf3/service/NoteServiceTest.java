@@ -1,4 +1,3 @@
-/*
 package com.assessment.ecf3.service;
 
 import com.assessment.ecf3.dao.NoteDAO;
@@ -50,4 +49,3 @@ public class NoteServiceTest {
         verify(noteDAO, times(1)).save(note);
     }
 }
-*/

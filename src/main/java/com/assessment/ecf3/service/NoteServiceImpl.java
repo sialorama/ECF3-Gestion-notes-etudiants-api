@@ -4,10 +4,10 @@ import com.assessment.ecf3.dao.NoteDAO;
 import com.assessment.ecf3.model.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
 @Service
 public class NoteServiceImpl implements NoteService {
+
     @Autowired
     private NoteDAO noteDAO;
 
@@ -17,7 +17,8 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> getAllNotes() {
-        return noteDAO.findAll();
+    public void supprimerNote(int id) {
+        noteDAO.delete(id);
     }
 }
+

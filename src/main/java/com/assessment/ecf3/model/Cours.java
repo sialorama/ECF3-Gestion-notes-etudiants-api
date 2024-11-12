@@ -1,24 +1,20 @@
 package com.assessment.ecf3.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-@Entity
 public class Cours {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
 
-    // Constructeurs, getters, setters
-    public Cours() {}
-
-    public Cours(String nom) {
+    // Constructeur
+    public Cours(int id, String nom) {
+        this.id = id;
         this.nom = nom;
     }
 
+    public Cours() {
+
+    }
+
+    // Getters et Setters
     public int getId() {
         return id;
     }

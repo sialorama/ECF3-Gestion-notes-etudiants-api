@@ -1,7 +1,13 @@
 package com.assessment.ecf3.dao;
 
 import com.assessment.ecf3.model.Etudiant;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.assessment.ecf3.model.Note;
 
-public interface EtudiantDAO extends JpaRepository<Etudiant, Integer> {
+import java.util.List;
+
+public interface EtudiantDAO {
+    Etudiant save(Etudiant etudiant);
+    Etudiant findById(int id);
+    List<Note> getNotes(int etudiantId);
+    void delete(int id);
 }

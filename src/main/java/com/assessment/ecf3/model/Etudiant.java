@@ -1,28 +1,26 @@
 package com.assessment.ecf3.model;
 
-import jakarta.persistence.*;
-
 import java.util.List;
 
-@Entity
 public class Etudiant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
     private String prenom;
-
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL)
     private List<Note> notes;
 
-    // Constructeurs, getters, setters
-    public Etudiant() {}
-
-    public Etudiant(String nom, String prenom) {
+    // Constructeur
+    public Etudiant(int id, String nom, String prenom, List<Note> notes) {
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+        this.notes = notes;
     }
 
+    public Etudiant() {
+
+    }
+
+    // Getters et Setters
     public int getId() {
         return id;
     }
