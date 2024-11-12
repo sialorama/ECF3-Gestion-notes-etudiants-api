@@ -1,4 +1,7 @@
-package com.assessment.ecf3.dto;
+package com.assessment.ecf3.dao;
 
-public class EtudiantDAO {
+import com.assessment.ecf3.model.Etudiant;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EtudiantDAO extends JpaRepository<Etudiant, Integer> {
 }
