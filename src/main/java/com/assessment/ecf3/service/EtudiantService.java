@@ -3,13 +3,18 @@ package com.assessment.ecf3.service;
 import com.assessment.ecf3.dao.EtudiantDAO;
 import com.assessment.ecf3.model.Etudiant;
 import com.assessment.ecf3.model.Note;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public abstract class EtudiantService {
-    private EtudiantDAO etudiantDAO;
+@Service
+public class EtudiantService {
 
-    // Injecter EtudiantDAO via le constructeur ou setter
+    private final EtudiantDAO etudiantDAO;
+
+    // Injection d'EtudiantDAO via le constructeur
+    @Autowired
     public EtudiantService(EtudiantDAO etudiantDAO) {
         this.etudiantDAO = etudiantDAO;
     }
@@ -21,21 +26,32 @@ public abstract class EtudiantService {
         return etudiantDAO.save(etudiant);
     }
 
-    public abstract Etudiant getEtudiant(int id);
-
-    public List<Note> consulterNotes(int etudiantId) {
-        return etudiantDAO.getNotes(etudiantId);
-    }
-
-/*    public Etudiant modifierEtudiant(Etudiant etudiant) {
-        Etudiant existant = etudiantDAO.findById(etudiant.getId());
-        if (existants == null) {
+    public Etudiant getEtudiant(int id) {
+        Etudiant etudiant = etudiantDAO.findById(id);
+        if (etudiant == null) {
             throw new IllegalArgumentException("Étudiant introuvable !");
         }
-        return etudiantDAO.save(etudiant);
-    }*/
+        return etudiant;
+    }
+
+
+    public List<Note> consulterNotes(int etudiantId) {
+        Etudiant etudiant = getEtudiant(etudiantId);
+        return etudiant.getNotes();
+    }
+
+    public Etudiant modifierEtudiant(Etudiant etudiant) {
+        Etudiant existant = getEtudiant(etudiant.getId());
+        existant.setNom(etudiant.getNom());
+        existant.setPrenom(etudiant.getPrenom());
+        existant.setNotes(etudiant.getNotes());
+        return etudiantDAO.save(existant);
+    }
 
     public void supprimerEtudiant(int id) {
+        if (etudiantDAO.findById(id) == null) {
+            throw new IllegalArgumentException("Étudiant introuvable !");
+        }
         etudiantDAO.delete(id);
     }
 }

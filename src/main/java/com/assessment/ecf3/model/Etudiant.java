@@ -1,11 +1,18 @@
 package com.assessment.ecf3.model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
 public class Etudiant {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
     private String prenom;
+
+    @OneToMany(mappedBy = "etudiant")
     private List<Note> notes;
 
     // Constructeur
@@ -16,9 +23,7 @@ public class Etudiant {
         this.notes = notes;
     }
 
-    public Etudiant() {
-
-    }
+    public Etudiant() {}
 
     // Getters et Setters
     public int getId() {

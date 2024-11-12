@@ -1,6 +1,7 @@
 package com.assessment.ecf3.controller;
 
 import com.assessment.ecf3.model.Etudiant;
+import com.assessment.ecf3.model.Note;
 import com.assessment.ecf3.service.EtudiantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
