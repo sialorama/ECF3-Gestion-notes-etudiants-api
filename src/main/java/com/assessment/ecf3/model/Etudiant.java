@@ -1,29 +1,30 @@
 package com.assessment.ecf3.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
 
 @Entity
 public class Etudiant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nom;
     private String prenom;
 
-    @OneToMany(mappedBy = "etudiant")
+    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Note> notes;
 
     // Constructeur
-    public Etudiant(int id, String nom, String prenom, List<Note> notes) {
-        this.id = id;
+    public Etudiant() {}
+
+    public Etudiant(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
-        this.notes = notes;
     }
-
-    public Etudiant() {}
 
     // Getters et Setters
     public int getId() {

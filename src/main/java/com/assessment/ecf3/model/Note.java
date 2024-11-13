@@ -1,32 +1,35 @@
 package com.assessment.ecf3.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
 public class Note {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id") // Colonne pour lier à l'étudiant
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "etudiant_id")
+    @JsonBackReference
     private Etudiant etudiant;
 
-    @ManyToOne
-    @JoinColumn(name = "cours_id") // Colonne pour lier au cours
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cours_id")
+    @JsonBackReference
     private Cours cours;
 
     private double valeur;
 
-    // Constructeurs
-    public Note(int id, Etudiant etudiant, Cours cours, double valeur) {
-        this.id = id;
+    // Constructeur
+    public Note() {}
+
+    public Note(Etudiant etudiant, Cours cours, double valeur) {
         this.etudiant = etudiant;
         this.cours = cours;
         this.valeur = valeur;
     }
-
-    public Note() {}
 
     // Getters et Setters
     public int getId() {

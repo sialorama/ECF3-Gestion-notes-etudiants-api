@@ -1,26 +1,25 @@
-/*
 package com.assessment.ecf3.controller;
 
 import com.assessment.ecf3.model.Etudiant;
 import com.assessment.ecf3.service.EtudiantService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class EtudiantControllerIntegrationTest {
+@WebMvcTest(EtudiantController.class)
+class EtudiantControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -28,20 +27,36 @@ public class EtudiantControllerIntegrationTest {
     @MockBean
     private EtudiantService etudiantService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Test
-    public void testAjouterEtudiantAPI() throws Exception {
+    void ajouterEtudiant_ShouldReturnCreatedEtudiant() throws Exception {
         Etudiant etudiant = new Etudiant();
-        etudiant.setNom("Dupont");
-        etudiant.setPrenom("Jean");
+        etudiant.setNom("John");
+        etudiant.setPrenom("Doe");
 
         when(etudiantService.ajouterEtudiant(any(Etudiant.class))).thenReturn(etudiant);
 
         mockMvc.perform(post("/etudiants")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"nom\": \"Dupont\", \"prenom\": \"Jean\"}"))
+                        .content(objectMapper.writeValueAsString(etudiant)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nom").value("Dupont"))
-                .andExpect(jsonPath("$.prenom").value("Jean"));
+                .andExpect(jsonPath("$.nom").value("John"))
+                .andExpect(jsonPath("$.prenom").value("Doe"));
+    }
+
+    @Test
+    void getEtudiant_ShouldReturnEtudiant_WhenEtudiantExists() throws Exception {
+        Etudiant etudiant = new Etudiant();
+        etudiant.setId(1);
+        etudiant.setNom("John");
+
+        when(etudiantService.getEtudiant(1)).thenReturn(etudiant);
+
+        mockMvc.perform(get("/etudiants/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.nom").value("John"));
     }
 }
-*/

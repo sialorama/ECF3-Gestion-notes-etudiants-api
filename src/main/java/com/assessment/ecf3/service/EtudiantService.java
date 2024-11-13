@@ -13,45 +13,28 @@ public class EtudiantService {
 
     private final EtudiantDAO etudiantDAO;
 
-    // Injection d'EtudiantDAO via le constructeur
     @Autowired
     public EtudiantService(EtudiantDAO etudiantDAO) {
         this.etudiantDAO = etudiantDAO;
     }
 
     public Etudiant ajouterEtudiant(Etudiant etudiant) {
-        if (etudiantDAO.findById(etudiant.getId()) != null) {
-            throw new IllegalArgumentException("Étudiant existe déjà !");
-        }
         return etudiantDAO.save(etudiant);
     }
 
     public Etudiant getEtudiant(int id) {
-        Etudiant etudiant = etudiantDAO.findById(id);
-        if (etudiant == null) {
-            throw new IllegalArgumentException("Étudiant introuvable !");
-        }
-        return etudiant;
+        return etudiantDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Étudiant introuvable !"));
     }
 
-
     public List<Note> consulterNotes(int etudiantId) {
-        Etudiant etudiant = getEtudiant(etudiantId);
-        return etudiant.getNotes();
+        return getEtudiant(etudiantId).getNotes();
     }
 
     public Etudiant modifierEtudiant(Etudiant etudiant) {
-        Etudiant existant = getEtudiant(etudiant.getId());
-        existant.setNom(etudiant.getNom());
-        existant.setPrenom(etudiant.getPrenom());
-        existant.setNotes(etudiant.getNotes());
-        return etudiantDAO.save(existant);
+        return etudiantDAO.save(etudiant);
     }
 
     public void supprimerEtudiant(int id) {
-        if (etudiantDAO.findById(id) == null) {
-            throw new IllegalArgumentException("Étudiant introuvable !");
-        }
-        etudiantDAO.delete(id);
+        etudiantDAO.deleteById(id);
     }
 }

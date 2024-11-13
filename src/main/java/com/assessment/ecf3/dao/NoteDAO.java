@@ -1,12 +1,10 @@
 package com.assessment.ecf3.dao;
 
 import com.assessment.ecf3.model.Note;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface NoteDAO {
-    Note save(Note note);
-    Note findById(int id);
-    void delete(int id);
-    List<Note> findByStudentId(int etudiantId);
+@Repository
+public interface NoteDAO extends JpaRepository<Note, Integer> {
+    // Custom query methods if needed
 }

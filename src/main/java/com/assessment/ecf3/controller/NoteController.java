@@ -5,26 +5,36 @@ import com.assessment.ecf3.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/notes")
 public class NoteController {
 
+    private final NoteService noteService;
+
     @Autowired
-    private NoteService noteService;
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @PostMapping
     public Note ajouterNote(@RequestBody Note note) {
         return noteService.ajouterNote(note);
     }
 
-    @DeleteMapping("/{id}")
-    public void supprimerNote(@PathVariable int id) {
-        noteService.supprimerNote(id);
+    @GetMapping("/{id}")
+    public Note getNoteById(@PathVariable int id) {
+        return noteService.getNoteById(id);
     }
 
-/*    @GetMapping
+    @GetMapping
     public List<Note> getAllNotes() {
         return noteService.getAllNotes();
-    }*/
-}
+    }
 
+    @DeleteMapping("/{id}")
+    public void supprimerNoteById(@PathVariable int id) {
+        noteService.supprimerNoteById(id);
+    }
+}
