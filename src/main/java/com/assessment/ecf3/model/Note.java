@@ -8,21 +8,20 @@ public class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "etudiant_id")
-    @JsonBackReference
+    @JsonBackReference("etudiant-notes")
     private Etudiant etudiant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cours_id")
-    @JsonBackReference
+    @JsonBackReference("etudiant-cours")
     private Cours cours;
 
     private double valeur;
 
-    // Constructeur
     public Note() {}
 
     public Note(Etudiant etudiant, Cours cours, double valeur) {
@@ -32,11 +31,11 @@ public class Note {
     }
 
     // Getters et Setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,5 +61,10 @@ public class Note {
 
     public void setValeur(double valeur) {
         this.valeur = valeur;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{id=" + id + ", valeur=" + valeur + "}";
     }
 }

@@ -18,16 +18,20 @@ public class EtudiantService {
         this.etudiantDAO = etudiantDAO;
     }
 
+    public List<Etudiant> getAllEtudiant() {
+        return etudiantDAO.findAll();
+    }
     public Etudiant ajouterEtudiant(Etudiant etudiant) {
         return etudiantDAO.save(etudiant);
     }
 
-    public Etudiant getEtudiant(int id) {
+    public Etudiant getEtudiantById(int id) {
         return etudiantDAO.findById(id).orElseThrow(() -> new IllegalArgumentException("Étudiant introuvable !"));
     }
 
     public List<Note> consulterNotes(int etudiantId) {
-        return getEtudiant(etudiantId).getNotes();
+
+        return getEtudiantById(etudiantId).getNotes();
     }
 
     public Etudiant modifierEtudiant(Etudiant etudiant) {
@@ -37,4 +41,5 @@ public class EtudiantService {
     public void supprimerEtudiant(int id) {
         etudiantDAO.deleteById(id);
     }
+
 }

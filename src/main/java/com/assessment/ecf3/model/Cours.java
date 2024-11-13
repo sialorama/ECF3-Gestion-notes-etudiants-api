@@ -1,7 +1,7 @@
 package com.assessment.ecf3.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -14,7 +14,8 @@ public class Cours {
     private String description;
     private Integer duree;
 
-    @ManyToMany
+    @JsonManagedReference("etudiant-cours")
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "etudiant_cours",
             joinColumns = @JoinColumn(name = "cours_id"),
@@ -22,10 +23,8 @@ public class Cours {
     )
     private List<Etudiant> etudiants;
 
-    // Constructeur sans arguments
     public Cours() {}
 
-    // Constructeur avec arguments
     public Cours(String nom, String description, Integer duree) {
         this.nom = nom;
         this.description = description;
@@ -65,7 +64,24 @@ public class Cours {
         this.duree = duree;
     }
 
-    // Méthode toString pour un affichage plus lisible
+    public List<Etudiant> getEtudiants() {
+        return etudiants;
+    }
+
+    public void setEtudiants(List<Etudiant> etudiants) {
+        this.etudiants = etudiants;
+    }
+
+    public void addEtudiant(Etudiant etudiant) {
+        this.etudiants.add(etudiant);
+        etudiant.getCours().add(this);
+    }
+
+    public void removeEtudiant(Etudiant etudiant) {
+        this.etudiants.remove(etudiant);
+        etudiant.getCours().remove(this);
+    }
+
     @Override
     public String toString() {
         return "Cours{id=" + id + ", nom='" + nom + "', description='" + description + "', duree=" + duree + "}";

@@ -4,15 +4,11 @@ import com.assessment.ecf3.model.Etudiant;
 import com.assessment.ecf3.service.EtudiantService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Collections;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -52,7 +48,7 @@ class EtudiantControllerIntegrationTest {
         etudiant.setId(1);
         etudiant.setNom("John");
 
-        when(etudiantService.getEtudiant(1)).thenReturn(etudiant);
+        when(etudiantService.getEtudiantById(1)).thenReturn(etudiant);
 
         mockMvc.perform(get("/etudiants/1"))
                 .andExpect(status().isOk())

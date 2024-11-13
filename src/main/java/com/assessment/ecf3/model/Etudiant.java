@@ -2,7 +2,6 @@ package com.assessment.ecf3.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -10,15 +9,17 @@ public class Etudiant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String nom;
     private String prenom;
 
+    @JsonManagedReference("etudiant-notes")
     @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Note> notes;
 
-    // Constructeur
+    @ManyToMany(mappedBy = "etudiants", fetch = FetchType.LAZY)
+    private List<Cours> cours;
+
     public Etudiant() {}
 
     public Etudiant(String nom, String prenom) {
@@ -27,11 +28,11 @@ public class Etudiant {
     }
 
     // Getters et Setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,5 +58,18 @@ public class Etudiant {
 
     public void setNotes(List<Note> notes) {
         this.notes = notes;
+    }
+
+    public List<Cours> getCours() {
+        return cours;
+    }
+
+    public void setCours(List<Cours> cours) {
+        this.cours = cours;
+    }
+
+    @Override
+    public String toString() {
+        return "Etudiant{id=" + id + ", nom='" + nom + "', prenom='" + prenom + "'}";
     }
 }
