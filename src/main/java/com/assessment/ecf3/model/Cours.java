@@ -1,6 +1,5 @@
 package com.assessment.ecf3.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -9,12 +8,12 @@ public class Cours {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String nom;
     private String description;
-    private Integer duree;
+    private int duree;
 
-    @JsonManagedReference("etudiant-cours")
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "etudiant_cours",
@@ -25,18 +24,18 @@ public class Cours {
 
     public Cours() {}
 
-    public Cours(String nom, String description, Integer duree) {
+    public Cours(String nom, String description, int duree) {
         this.nom = nom;
         this.description = description;
         this.duree = duree;
     }
 
     // Getters et Setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,11 +55,11 @@ public class Cours {
         this.description = description;
     }
 
-    public Integer getDuree() {
+    public int getDuree() {
         return duree;
     }
 
-    public void setDuree(Integer duree) {
+    public void setDuree(int duree) {
         this.duree = duree;
     }
 
@@ -84,6 +83,6 @@ public class Cours {
 
     @Override
     public String toString() {
-        return "Cours{id=" + id + ", nom='" + nom + "', description='" + description + "', duree=" + duree + "}";
+        return "Cours{id=" + id + ", nom='" + nom + "', description='" + description + "', duree='" + duree + "'}";
     }
 }

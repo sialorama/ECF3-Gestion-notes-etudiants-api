@@ -46,7 +46,7 @@ class EtudiantServiceTest {
         etudiant.setId(1);
         when(etudiantDAO.findById(1)).thenReturn(Optional.of(etudiant));
 
-        Etudiant result = etudiantService.getEtudiant(1);
+        Etudiant result = etudiantService.getEtudiantById(1);
 
         assertEquals(etudiant, result);
     }
@@ -55,7 +55,7 @@ class EtudiantServiceTest {
     void getEtudiant_ShouldThrowException_WhenEtudiantDoesNotExist() {
         when(etudiantDAO.findById(1)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> etudiantService.getEtudiant(1));
+        assertThrows(IllegalArgumentException.class, () -> etudiantService.getEtudiantById(1));
     }
 
     @Test

@@ -9,15 +9,22 @@ public class Etudiant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String nom;
     private String prenom;
 
     @JsonManagedReference("etudiant-notes")
-    @OneToMany(mappedBy = "etudiant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(
+            mappedBy = "etudiant",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
     private List<Note> notes;
 
-    @ManyToMany(mappedBy = "etudiants", fetch = FetchType.LAZY)
+    @ManyToMany(
+            mappedBy = "etudiants",
+            fetch = FetchType.LAZY
+    )
     private List<Cours> cours;
 
     public Etudiant() {}
@@ -28,11 +35,11 @@ public class Etudiant {
     }
 
     // Getters et Setters
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

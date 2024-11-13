@@ -35,12 +35,13 @@ public class CoursController {
     }
     // Modifier un cours par son ID.
     @PutMapping("/{id}")
-    public Cours modifierCours(@PathVariable Integer id, @RequestBody Cours cours) {
-        return coursService.modifierCours(id, cours);
+    public Cours modifierCours(@PathVariable int id, @RequestBody Cours cours) {
+        cours.setId(id);
+        return coursService.modifierCours(cours);
     }
     //Supprimer un cours par son ID.
     @DeleteMapping("/{id}")
-    public void supprimerCoursById(@PathVariable Integer id) {
+    public void supprimerCoursById(@PathVariable int id) {
         coursService.supprimerCoursById(id);
     }
 }
